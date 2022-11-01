@@ -6,10 +6,11 @@
           <h1 class="text-lg">Active Tracker</h1>
         </div>
         <ul class="flex flex-1 justify-end gap-x-10">
+          <router-link  class="curser-pointer" :to="{name: 'Info'}">Info</router-link>
           <router-link class="curser-pointer" :to="{name: 'Home'}">Home</router-link>
-          <router-link v-if="user" class="curser-pointer" :to="{name: 'Register'}">Register</router-link>
+          <router-link v-if="!user" class="curser-pointer" :to="{name: 'Register'}">Register</router-link>
           <router-link v-if="!user" class="curser-pointer" :to="{name: 'Login'}">Login</router-link>
-          <router-link  class="curser-pointer" :to="{name: 'Create'}">Create</router-link>
+          <router-link v-if="user" class="curser-pointer" :to="{name: 'Create'}">Create</router-link>
           <li v-if="user" @click='logout'  class="curser-pointer" >Logout</li>
         </ul>
     </nav>
@@ -19,7 +20,7 @@
 <script>
 
 import store from "../store/index"
-import { computed } from "vue"
+import {computed} from "vue"
 import {supabase} from "../supabase/init"
 import {useRouter} from "vue-router" 
 export default {

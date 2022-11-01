@@ -183,7 +183,6 @@
 
         <button
           type="submit"
-          @click ="addExercise"
           class="mt-6 py-2 px-6 rounded-sm self-start text-sm
       text-white bg-at-light-green duration-200 border-solid
       border-2 border-transparent hover:border-at-light-green hover:bg-white
@@ -199,7 +198,7 @@
 <script>
 import {ref} from "vue"; // to make the data here reactive
 import {uid} from "uid";
-import {supabase} from '../supabase/init'
+import { supabase } from '../supabase/init'
 export default {
   name: "create",
   setup() {
@@ -253,13 +252,13 @@ const workoutChange = () => {
 }
     // Create workout
    
-  const createWorkout = async () => {
+const createWorkout = async () => {
      try{
-      const {error} = await supabase.from('workouts').insert([
+      const {error} = await supabase.from("workouts").insert([
         {
           workoutName: workoutName.value,
           workoutType: workoutType.value,
-          excercises: exercises.value,
+          exercises: exercises.value,
         },
       ]);
       if(error) throw error;
@@ -267,22 +266,31 @@ const workoutChange = () => {
       workoutName.value = null;
       workoutType.value = "select workout";
       exercises.value = [];
-
+      setTimeout(()=>{
+        statusMsg.value = false;
+      },5000);
 
      }
      catch(error){
       errorMsg.value = `Error: ${error.message}`;
       setTimeout(()=>{
         errorMsg.value = false
-      })
+      },5000)
      }
 
-  }
+};
 
-
-
-
-    return {workoutName,workoutType,exercises,statusMsg,errorMsg, addExercise, deleteExercise, workoutChange, createWorkout};  // this sis to access our data inside the markup
+    return {
+      workoutName,
+      workoutType,
+      exercises,
+      statusMsg,
+      errorMsg, 
+      addExercise, 
+      deleteExercise, 
+      workoutChange, 
+      createWorkout
+    };  // this sis to access our data inside the markup
   },
 };
 </script>
